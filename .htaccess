@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Enable clean URLs (remove .html extension)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# Redirect stakeholders.html to clean URL
+RewriteRule ^stakeholders\.html$ /stakeholders [R=301,L]
