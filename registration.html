@@ -121,35 +121,41 @@
                         <div class="form">
                             <h4><i class="fa fa-edit" style="color: #008000; margin-right: 10px;"></i>Registration Form</h4>
                             
-                            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" role="form">
-                                <!-- Note: Replace YOUR_FORM_ID with actual Formspree form ID or Google Form URL -->
-                                
+                            <!-- HIDDEN IFRAME FOR GOOGLE FORMS SUBMISSION -->
+                            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+                            <form id="registrationForm" 
+                                  target="hidden_iframe" 
+                                  action="https://docs.google.com/forms/d/e/1FAIpQLSeai3XEUjY_qemJuOn5IsSgVPvQsgRMgvZin1wDOXv-_fRlIA/formResponse" 
+                                  method="POST"
+                                  onsubmit="submitted=true;">
+
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="fullName">Full Name <span style="color: red;">*</span></label>
-                                        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                                        <input type="text" class="form-control" id="fullName" name="entry.646126497" placeholder="Enter your full name" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="email">Email Address <span style="color: red;">*</span></label>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                        <input type="email" class="form-control" id="email" name="entry.347635863" placeholder="Enter your email" required>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="phone">Phone Number <span style="color: red;">*</span></label>
-                                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="e.g., +234 80 1234 5678" required>
+                                        <input type="tel" class="form-control" id="phone" name="entry.1760080041" placeholder="e.g., +234 80 1234 5678" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="organisation">Organisation <span style="color: red;">*</span></label>
-                                        <input type="text" class="form-control" id="organisation" name="organisation" placeholder="Your organization/institution" required>
+                                        <input type="text" class="form-control" id="organisation" name="entry.394851213" placeholder="Your organization/institution" required>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="state">State <span style="color: red;">*</span></label>
-                                        <select class="form-control" id="state" name="state" required>
+                                        <select class="form-control" id="state" name="entry.1014336427" required>
                                             <option value="">Select your state</option>
                                             <option value="Abia">Abia</option>
                                             <option value="Anambra">Anambra</option>
@@ -161,7 +167,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="sector">Sector <span style="color: red;">*</span></label>
-                                        <select class="form-control" id="sector" name="sector" required>
+                                        <select class="form-control" id="sector" name="entry.1714471417" required>
                                             <option value="">Select your sector</option>
                                             <option value="Government">Government</option>
                                             <option value="CSO">Civil Society Organization (CSO)</option>
@@ -173,10 +179,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="hearAbout">How did you hear about SEMD 2026? <span style="color: red;">*</span></label>
-                                    <select class="form-control" id="hearAbout" name="hearAbout" required>
+                                    <select class="form-control" id="hearAbout" name="entry.645212182" required>
                                         <option value="">Select an option</option>
                                         <option value="Social Media">Social Media (Facebook, Twitter, Instagram, LinkedIn)</option>
                                         <option value="Email">Email Newsletter</option>
@@ -188,30 +194,61 @@
                                         <option value="Other">Other</option>
                                     </select>
                                 </div>
-                                
+
+                                <!-- What do you hope to gain? -->
                                 <div class="form-group">
                                     <label for="expectations">What do you hope to gain from this dialogue? (Optional)</label>
-                                    <textarea class="form-control" id="expectations" name="expectations" rows="3" placeholder="Share your expectations..."></textarea>
+                                    <textarea class="form-control" id="expectations" name="entry.1182382955" rows="3" placeholder="Share your expectations..."></textarea>
                                 </div>
-                                
+
+                                <!-- Subscribe to our YouTube channel -->
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="newsletter" name="newsletter">
-                                        <label class="custom-control-label" for="newsletter">Subscribe to receive updates about SEMD 2026 and migration-related news</label>
+                                        <input type="checkbox" class="custom-control-input" id="youtube" name="entry.1223163277" value="Yes, subscribe me for live streaming updates">
+                                        <label class="custom-control-label" for="youtube">
+                                            Yes, subscribe me for live streaming updates
+                                            <br>
+                                            <a href="https://www.youtube.com/channel/UC8_kVgv29iK3Ux0dCL2aNlw?sub_confirmation=1" target="_blank" style="font-size: 0.85rem; font-weight: normal; display: inline-block; margin-top: 5px;">
+                                                🔔 Click here to subscribe to our YouTube channel for live streaming
+                                            </a>
+                                        </label>
                                     </div>
                                 </div>
-                                
+
+                                <!-- Privacy & Terms Agreement -->
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="terms" name="terms" required>
+                                        <input type="checkbox" class="custom-control-input" id="terms" name="entry.1052936478" value="I agree to receive communication about SEMD 2026 and understand that my information will be handled in accordance with the privacy policy." required>
                                         <label class="custom-control-label" for="terms">I agree to receive communication about SEMD 2026 and understand that my information will be handled in accordance with the privacy policy. <span style="color: red;">*</span></label>
                                     </div>
                                 </div>
-                                
+
                                 <div class="text-center">
                                     <button type="submit"><i class="fa fa-paper-plane" style="margin-right: 10px;"></i>Submit Registration</button>
                                 </div>
                             </form>
+
+                            <script>
+                                let submitted = false;
+                                const iframe = document.getElementById('hidden_iframe');
+                                iframe.onload = function() {
+                                    if (submitted) {
+                                        document.getElementById('registrationForm').style.display = 'none';
+                                        const successMsg = document.createElement('div');
+                                        successMsg.className = 'alert alert-success text-center';
+                                        successMsg.style.marginTop = '20px';
+                                        successMsg.style.padding = '20px';
+                                        successMsg.innerHTML = '<h4>✓ Registration Received!</h4><p>Thank you for registering for SEMD 2026. A confirmation email will be sent to your inbox shortly.</p>';
+                                        document.getElementById('registrationForm').parentNode.appendChild(successMsg);
+                                    }
+                                };
+                                document.getElementById('registrationForm').addEventListener('submit', function() {
+                                    submitted = true;
+                                    const btn = this.querySelector('button[type="submit"]');
+                                    btn.disabled = true;
+                                    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Submitting...';
+                                });
+                            </script>
                             
                             <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px; text-align: center;">
                                 <p style="margin: 0; color: #666;">
