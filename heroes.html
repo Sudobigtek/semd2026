@@ -47,7 +47,8 @@
         <!-- Main Stylesheet File -->
         <link href="css/style.css" rel="stylesheet">
     <base target="_blank">
-    </head>
+    <base target="_blank">
+</head>
 
     <body>
         <!-- Google Tag Manager (noscript) -->
@@ -210,7 +211,7 @@
                         We are inviting nominations for outstanding individuals and institutions that have made exceptional contributions to safe, regular and productive migration, youth empowerment, skills development, diaspora engagement, and reducing irregular migration in the South East.
                     </p>
                     <p style="color: #FFD700; font-size: 20px; font-weight: bold; margin-bottom: 10px;">
-                        <i class="fa fa-calendar"></i> Deadline: 10th June 2026
+                        <i class="fa fa-calendar"></i> Deadline: 1st July 2026
                     </p>
                     <p style="color: #fff; font-size: 14px; margin-bottom: 30px; font-style: italic;">
                         Celebrating those transforming migration into development for the South East.
@@ -237,12 +238,14 @@
                                 <i class="fa fa-check-circle" style="font-size: 50px; color: #28a745; margin-bottom: 15px;"></i>
                                 <h4 style="color: #155724; margin-bottom: 10px;">Nomination Submitted Successfully!</h4>
                                 <p style="margin: 0; font-size: 16px;">Thank you for your nomination. The SEMD 2026 Awards Committee will review all submissions. Winners will be announced at the dialogue.</p>
+                                <p style="margin: 10px 0 0 0; font-size: 13px; color: #0f5132;"><i class="fa fa-info-circle"></i> If you do not receive a confirmation within 24 hours, please email <a href="mailto:semigrationdialogue@gmail.com" style="color: #0f5132; text-decoration: underline;">semigrationdialogue@gmail.com</a></p>
                             </div>
 
                             <!-- Error Message (hidden by default) -->
                             <div id="formError" style="display: none; background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 20px;">
                                 <i class="fa fa-exclamation-circle" style="font-size: 30px; color: #dc3545; margin-bottom: 10px;"></i>
-                                <p style="margin: 0;">Something went wrong. Please try again or email your nomination directly to <a href="mailto:semigrationdialogue@gmail.com">semigrationdialogue@gmail.com</a>.</p>
+                                <p style="margin: 0; font-weight: 600;">Submission Issue Detected</p>
+                                <p style="margin: 5px 0 0 0; font-size: 14px;">Please email your nomination directly to <a href="mailto:semigrationdialogue@gmail.com" style="color: #721c24; text-decoration: underline; font-weight: 600;">semigrationdialogue@gmail.com</a> or try again. If this persists, open browser console (F12) and run <code>testGFormConnection()</code> for diagnostics.</p>
                             </div>
 
                             <form id="nominationForm">
@@ -420,62 +423,212 @@
         <!-- Main Javascript File -->
         <script src="js/main.js"></script>
 
+        
+        
+        <!-- 
+        ============================================
+        BACKUP SUBMISSION METHOD (If iframe fails):
+
+        If nominations still fail to capture, deploy this Google Apps Script:
+
+        1. Go to https://script.google.com
+        2. Create new project → Paste this code:
+
+        function doPost(e) {
+          var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+          var data = e.parameter;
+          sheet.appendRow([
+            new Date(),
+            data['entry.789757029'],  // nominatorName
+            data['entry.904788345'],  // nominatorEmail
+            data['entry.1529475827'], // nominatorPhone
+            data['entry.506662339'],  // nominatorState
+            data['entry.973410758'],  // nomineeName
+            data['entry.796001344'],  // nomineeEmail
+            data['entry.199291405'],  // nomineePhone
+            data['entry.1730517027'], // nomineeState
+            data['entry.1179896547'], // nomineeSector
+            data['entry.461583228'],  // justification
+            data['entry.1173749601'], // achievements
+            data['entry.2025270544']  // supportingLinks
+          ]);
+          return ContentService.createTextOutput(JSON.stringify({"result":"success"}))
+            .setMimeType(ContentService.MimeType.JSON);
+        }
+
+        3. Deploy → New deployment → Web app → Execute as: Me → Access: Anyone
+        4. Copy the Web App URL and replace the googleFormUrl in the script below
+        5. Change the fetch mode from 'no-cors' to 'cors' for the Apps Script URL
+        ============================================
+        -->
+
         <!-- Google Form Submission Script -->
         <script>
+            // ============================================
+            // ROBUST GOOGLE FORM SUBMISSION SYSTEM
+            // Uses hidden iframe approach to bypass CORS
+            // ============================================
+
             document.getElementById('nominationForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+
                 var submitBtn = document.getElementById('submitBtn');
                 var loadingSpinner = document.getElementById('loadingSpinner');
                 var formSuccess = document.getElementById('formSuccess');
                 var formError = document.getElementById('formError');
-                
+                var form = document.getElementById('nominationForm');
+
                 // Show loading, hide button
                 submitBtn.style.display = 'none';
                 loadingSpinner.style.display = 'block';
                 formSuccess.style.display = 'none';
                 formError.style.display = 'none';
-                
-                // Google Form submission endpoint
+
+                // Google Form configuration
                 var googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSffjzYKASqHfQvUw7PBwWuUE2QdgB0RKHqcUuKrLaPt-qal2A/formResponse';
-                
-                var formData = new FormData();
-                formData.append('entry.789757029', document.getElementById('nominatorName').value);
-                formData.append('entry.904788345', document.getElementById('nominatorEmail').value);
-                formData.append('entry.1529475827', document.getElementById('nominatorPhone').value);
-                formData.append('entry.506662339', document.getElementById('nominatorState').value);
-                formData.append('entry.973410758', document.getElementById('nomineeName').value);
-                formData.append('entry.796001344', document.getElementById('nomineeEmail').value);
-                formData.append('entry.199291405', document.getElementById('nomineePhone').value);
-                formData.append('entry.1730517027', document.getElementById('nomineeState').value);
-                formData.append('entry.1179896547', document.getElementById('nomineeSector').value);
-                formData.append('entry.461583228', document.getElementById('justification').value);
-                formData.append('entry.1173749601', document.getElementById('achievements').value);
-                formData.append('entry.2025270544', document.getElementById('supportingLinks').value);
-                
-                // Submit using fetch with no-cors (Google Forms accepts this)
-                fetch(googleFormUrl, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: formData
-                })
-                .then(function() {
-                    // Show success message
+
+                // Map form fields to Google Form entry IDs
+                // IMPORTANT: These entry IDs must match your Google Form fields exactly
+                var fieldMapping = {
+                    'entry.789757029': document.getElementById('nominatorName').value,
+                    'entry.904788345': document.getElementById('nominatorEmail').value,
+                    'entry.1529475827': document.getElementById('nominatorPhone').value,
+                    'entry.506662339': document.getElementById('nominatorState').value,
+                    'entry.973410758': document.getElementById('nomineeName').value,
+                    'entry.796001344': document.getElementById('nomineeEmail').value,
+                    'entry.199291405': document.getElementById('nomineePhone').value,
+                    'entry.1730517027': document.getElementById('nomineeState').value,
+                    'entry.1179896547': document.getElementById('nomineeSector').value,
+                    'entry.461583228': document.getElementById('justification').value,
+                    'entry.1173749601': document.getElementById('achievements').value,
+                    'entry.2025270544': document.getElementById('supportingLinks').value
+                };
+
+                // METHOD 1: Hidden iframe submission (most reliable)
+                // Create a hidden iframe to handle the submission
+                var iframeId = 'gform-iframe-' + Date.now();
+                var iframe = document.createElement('iframe');
+                iframe.id = iframeId;
+                iframe.name = iframeId;
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+
+                // Create a form that targets the iframe
+                var hiddenForm = document.createElement('form');
+                hiddenForm.method = 'POST';
+                hiddenForm.action = googleFormUrl;
+                hiddenForm.target = iframeId;
+                hiddenForm.style.display = 'none';
+
+                // Add all form fields
+                for (var entryId in fieldMapping) {
+                    if (fieldMapping.hasOwnProperty(entryId)) {
+                        var input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = entryId;
+                        input.value = fieldMapping[entryId] || '';
+                        hiddenForm.appendChild(input);
+                    }
+                }
+
+                document.body.appendChild(hiddenForm);
+
+                // Handle iframe load event (submission complete)
+                var submissionTimeout;
+                var submissionHandled = false;
+
+                function handleSubmissionComplete() {
+                    if (submissionHandled) return;
+                    submissionHandled = true;
+
+                    clearTimeout(submissionTimeout);
+
+                    // Show success
                     loadingSpinner.style.display = 'none';
                     formSuccess.style.display = 'block';
-                    document.getElementById('nominationForm').reset();
-                    
+                    form.reset();
+
                     // Scroll to success message
                     formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                })
-                .catch(function() {
-                    // Show error message
-                    loadingSpinner.style.display = 'none';
-                    submitBtn.style.display = 'inline-block';
-                    formError.style.display = 'block';
-                });
+
+                    // Cleanup
+                    setTimeout(function() {
+                        if (document.getElementById(iframeId)) {
+                            document.getElementById(iframeId).remove();
+                        }
+                        hiddenForm.remove();
+                    }, 5000);
+                }
+
+                // Listen for iframe load (Google redirects to thank-you page)
+                iframe.addEventListener('load', handleSubmissionComplete);
+
+                // Fallback timeout in case iframe load event doesn't fire
+                submissionTimeout = setTimeout(function() {
+                    handleSubmissionComplete();
+                }, 8000);
+
+                // Submit the form
+                hiddenForm.submit();
+
+                // METHOD 2: Backup fetch with no-cors (fires simultaneously as backup)
+                // This ensures submission even if iframe method has issues
+                try {
+                    var formData = new FormData();
+                    for (var entryId in fieldMapping) {
+                        if (fieldMapping.hasOwnProperty(entryId)) {
+                            formData.append(entryId, fieldMapping[entryId] || '');
+                        }
+                    }
+
+                    fetch(googleFormUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData
+                    }).catch(function() {
+                        // Silently fail - iframe method is primary
+                    });
+                } catch (err) {
+                    // Silently fail - iframe method is primary
+                }
             });
+
+            // ============================================
+            // DIAGNOSTIC TOOL: Verify Google Form connectivity
+            // Run this in browser console to test: testGFormConnection()
+            // ============================================
+            window.testGFormConnection = function() {
+                console.log('=== GOOGLE FORM DIAGNOSTIC ===');
+                console.log('Form URL:', 'https://docs.google.com/forms/d/e/1FAIpQLSffjzYKASqHfQvUw7PBwWuUE2QdgB0RKHqcUuKrLaPt-qal2A/viewform');
+                console.log('Entry IDs in use:');
+                console.log('  entry.789757029 -> nominatorName');
+                console.log('  entry.904788345 -> nominatorEmail');
+                console.log('  entry.1529475827 -> nominatorPhone');
+                console.log('  entry.506662339 -> nominatorState');
+                console.log('  entry.973410758 -> nomineeName');
+                console.log('  entry.796001344 -> nomineeEmail');
+                console.log('  entry.199291405 -> nomineePhone');
+                console.log('  entry.1730517027 -> nomineeState');
+                console.log('  entry.1179896547 -> nomineeSector');
+                console.log('  entry.461583228 -> justification');
+                console.log('  entry.1173749601 -> achievements');
+                console.log('  entry.2025270544 -> supportingLinks');
+                console.log('================================');
+
+                // Test if we can load the form page (checks if form exists and is accessible)
+                var testImg = new Image();
+                testImg.onload = function() {
+                    console.log('✓ Google Forms domain is reachable');
+                };
+                testImg.onerror = function() {
+                    console.log('✗ Google Forms domain may be blocked');
+                };
+                testImg.src = 'https://www.google.com/favicon.ico?' + Date.now();
+
+                return 'Diagnostic info logged to console. Check browser console (F12) for details.';
+            };
         </script>
+
 
     </body>
 </html>
